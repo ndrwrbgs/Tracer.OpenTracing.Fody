@@ -64,6 +64,7 @@ as follows.
       <Tracer adapterAssembly="Tracer.OpenTracing" 
               logManager="Tracer.OpenTracing.LogManagerAdapter" 
               logger="Tracer.OpenTracing.LoggerAdapter" >
+         <TraceOn class="none" method="none" />
       </Tracer>
     </Weavers>
     ```
