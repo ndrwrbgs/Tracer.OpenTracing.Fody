@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
+    using global::OpenTracing.Contrib.SemanticConventions;
     using global::OpenTracing.Util;
     using JetBrains.Annotations;
     using TracerAttributes;
@@ -11,6 +12,11 @@
     [TraceOn(TraceTarget.Public)]
     public class LoggerAdapter
     {
+        /// <summary>
+        /// From https://github.com/csnemes/tracer/blob/master/Tracer.Fody/Weavers/MethodWeaverBase.cs
+        /// </summary>
+        private static readonly string ExceptionMarker = "$exception";
+
         private readonly string name;
 
         public LoggerAdapter(Type containingType)
@@ -44,10 +50,31 @@
             object[] paramValues)
         {
             // TODO: This is dangerous, but only if folks misused tracing anyway. It will obscure their bugs, but not cause its own
-            GlobalTracer.Instance
+            var activeScope = GlobalTracer.Instance
                 .ScopeManager
-                .Active
-                .Dispose();
+                .Active;
+
+            if (paramNames != null)
+            {
+                int i = 0;
+                for (; i < paramNames.Length; i++)
+                {
+                    if (string.Equals(ExceptionMarker, paramNames[i]))
+                    {
+                        break;
+                    }
+                }
+
+                if (i < paramNames.Length)
+                {
+                    // Found match
+                    var exception = paramValues[i] as Exception;
+                    activeScope.Span
+                        .LogError(exception);
+                }
+            }
+
+            activeScope.Dispose();
         }
     }
 

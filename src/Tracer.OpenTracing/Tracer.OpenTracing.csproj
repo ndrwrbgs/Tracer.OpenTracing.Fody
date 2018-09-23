@@ -9,10 +9,10 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <AssemblyVersion>1.1</AssemblyVersion>
-    <FileVersion>1.1</FileVersion>
-    <Version>1.3</Version>
-    <PackageReleaseNotes>Aggressive inlining</PackageReleaseNotes>
+    <AssemblyVersion>2.1</AssemblyVersion>
+    <FileVersion>2.1</FileVersion>
+    <Version>2.1.1</Version>
+    <PackageReleaseNotes>Semantic handling of Exceptions</PackageReleaseNotes>
     <Description>Tracer.Fody plugin for instrumenting with OpenTracing</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Tracer.OpenTracing.Fody</PackageId>
@@ -26,6 +26,7 @@
     <PackageReference Include="JetBrains.Annotations" Version="[11.1.0,)">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="OpenTracing.Contrib.SemanticConventions" Version="0.1.0" />
     <PackageReference Include="Tracer.Fody" Version="[2.2.0,3.0)" />
   </ItemGroup>
 
