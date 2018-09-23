@@ -1,3 +1,5 @@
+[![NuGet][nuget-img]][nuget]
+
 # Tracer.OpenTracing.Fody
 [Fody](https://github.com/Fody/Fody) plugin based off of [tracer](https://github.com/csnemes/tracer) for instrumenting code with [OpenTracing](http://opentracing.io)
 
@@ -100,3 +102,6 @@ as follows.
           } // ActiveSpan.Finish() is injected on this line
       }
       ```
+
+  [nuget-img]: https://img.shields.io/nuget/v/Tracer.OpenTracing.Fody.svg
+  [nuget]: https://www.nuget.org/packages/Tracer.OpenTracing.Fody
