@@ -68,6 +68,7 @@ as follows.
     </Weavers>
     ```
 1. Configure code to be traced
+
    Use a combination of the FodyWeavers.xml configuration and Attributes on Classes, Assembly, or individual Methods to signal what elements
    should be traced. See [tracer/basics wiki](https://github.com/csnemes/tracer/wiki/Basics) for details.
    
