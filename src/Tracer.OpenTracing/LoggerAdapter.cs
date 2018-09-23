@@ -2,10 +2,13 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using global::OpenTracing.Util;
     using JetBrains.Annotations;
+    using TracerAttributes;
 
     [PublicAPI]
+    [TraceOn(TraceTarget.Public)]
     public class LoggerAdapter
     {
         private readonly string name;
@@ -15,6 +18,7 @@
             this.name = containingType != null ? containingType.Name + "." : null;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceEnter(
             string methodInfo,
             string[] paramNames,
@@ -22,7 +26,7 @@
         {
             if (!GlobalTracer.IsRegistered())
             {
-                Trace.TraceError($"Attempted to trace a {nameof(this.TraceEnter)} operation with {typeof(LoggerAdapter).FullName} before {nameof(GlobalTracer.Register)} was called.");
+                Trace.TraceError(Error.TracerNotRegisteredOnEnter);
                 return;
             }
 
@@ -30,7 +34,8 @@
                 .BuildSpan($"{this.name}{methodInfo}")
                 .StartActive();
         }
-
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceLeave(
             string methodInfo,
             long startTicks,
@@ -44,5 +49,11 @@
                 .Active
                 .Dispose();
         }
+    }
+
+    internal static class Error
+    {
+        public static readonly string TracerNotRegisteredOnEnter =
+            $"Attempted to trace a {nameof(LoggerAdapter.TraceEnter)} operation with {typeof(LoggerAdapter).FullName} before {nameof(GlobalTracer.Register)} was called.";
     }
 }

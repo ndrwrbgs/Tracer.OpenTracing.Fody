@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracer.OpenTracing", "Library\Tracer.OpenTracing.csproj", "{C665395E-86BE-4779-8D59-60128788CD28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracer.OpenTracing", "Tracer.OpenTracing\Tracer.OpenTracing.csproj", "{8FF36C98-56AC-4FA3-B267-18F324A5E81C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C665395E-86BE-4779-8D59-60128788CD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C665395E-86BE-4779-8D59-60128788CD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C665395E-86BE-4779-8D59-60128788CD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C665395E-86BE-4779-8D59-60128788CD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF36C98-56AC-4FA3-B267-18F324A5E81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF36C98-56AC-4FA3-B267-18F324A5E81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF36C98-56AC-4FA3-B267-18F324A5E81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF36C98-56AC-4FA3-B267-18F324A5E81C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DDA2FDDF-E160-4D94-AEF4-39ED463BF9D8}
+		SolutionGuid = {DC8CC556-A6CC-46BE-89B6-D2D1D47596BD}
 	EndGlobalSection
 EndGlobal
