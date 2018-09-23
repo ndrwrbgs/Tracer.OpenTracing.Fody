@@ -85,7 +85,7 @@ as follows.
         </Tracer>
       </Weavers>
       ```
-      ### Examplee 2 - MyClass.cs
+      ### Example 2 - MyClass.cs
       ```C#
       [TraceOn]
       class Foo
