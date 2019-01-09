@@ -1,4 +1,4 @@
-[![NuGet][nuget-img]][nuget]
+[![NuGet](https://img.shields.io/nuget/v/Tracer.OpenTracing.Fody.svg)](https://www.nuget.org/packages/Tracer.OpenTracing.Fody)
 
 # Tracer.OpenTracing.Fody
 [Fody](https://github.com/Fody/Fody) plugin based off of [tracer](https://github.com/csnemes/tracer) for instrumenting code with [OpenTracing](http://opentracing.io)
