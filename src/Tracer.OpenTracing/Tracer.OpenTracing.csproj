@@ -19,6 +19,11 @@
     <Authors>ndrwrbgs</Authors>
     <Company />
     <Product />
+    <Copyright>Copyright 2019</Copyright>
+    <PackageLicenseUrl>https://github.com/ndrwrbgs/Tracer.OpenTracing.Fody/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ndrwrbgs/Tracer.OpenTracing.Fody</PackageProjectUrl>
+    <PackageIconUrl>https://avatars0.githubusercontent.com/u/15482765</PackageIconUrl>
+    <RepositoryUrl>https://github.com/ndrwrbgs/Tracer.OpenTracing.Fody</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
