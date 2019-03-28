@@ -54,6 +54,14 @@
                 .ScopeManager
                 .Active;
 
+            // Since we allow silently passing TraceEnter if the GlobalTracer isn't registered, we would need to support Leaving those spans too
+            // (e.g. after GlobalTracer registration from a nested method)
+            if (activeScope?.Span == null)
+            {
+                Trace.TraceError(Error.NoActiveSpanOnLeave);
+                return;
+            }
+
             if (paramNames != null)
             {
                 int i = 0;
@@ -82,5 +90,8 @@
     {
         public static readonly string TracerNotRegisteredOnEnter =
             $"Attempted to trace a {nameof(LoggerAdapter.TraceEnter)} operation with {typeof(LoggerAdapter).FullName} before {nameof(GlobalTracer.Register)} was called.";
+
+        public static readonly string NoActiveSpanOnLeave =
+            $"Attempted to trace a {nameof(LoggerAdapter.TraceLeave)} operation with {typeof(LoggerAdapter).FullName} but {nameof(GlobalTracer)}.{nameof(GlobalTracer.Instance)}.{nameof(GlobalTracer.Instance.ScopeManager)}.{nameof(GlobalTracer.Instance.ScopeManager.Active)}.{nameof(GlobalTracer.Instance.ScopeManager.Active.Span)} was null.";
     }
 }

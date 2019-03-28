@@ -11,8 +11,8 @@
   <PropertyGroup>
     <AssemblyVersion>2.1</AssemblyVersion>
     <FileVersion>2.1</FileVersion>
-    <Version>2.1.1</Version>
-    <PackageReleaseNotes>Semantic handling of Exceptions</PackageReleaseNotes>
+    <Version>2.1.2</Version>
+    <PackageReleaseNotes>Silent exit</PackageReleaseNotes>
     <Description>Tracer.Fody plugin for instrumenting with OpenTracing</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Tracer.OpenTracing.Fody</PackageId>
