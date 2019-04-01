@@ -19,6 +19,9 @@
 
         private readonly string name;
 
+        private static bool loggedTraceEnterError;
+        private static bool loggedTraceLeaveError;
+
         public LoggerAdapter(Type containingType)
         {
             this.name = containingType != null ? containingType.Name + "." : null;
@@ -32,7 +35,13 @@
         {
             if (!GlobalTracer.IsRegistered())
             {
-                Trace.TraceError(Error.TracerNotRegisteredOnEnter);
+                // Not locking on this check, it's okay to log a few times
+                if (!loggedTraceEnterError)
+                {
+                    loggedTraceEnterError = true;
+                    Trace.TraceError(Error.TracerNotRegisteredOnEnter);
+                }
+
                 return;
             }
 
@@ -58,7 +67,13 @@
             // (e.g. after GlobalTracer registration from a nested method)
             if (activeScope?.Span == null)
             {
-                Trace.TraceError(Error.NoActiveSpanOnLeave);
+                // Not locking on this check, it's okay to log a few times
+                if (!loggedTraceLeaveError)
+                {
+                    loggedTraceLeaveError = true;
+                    Trace.TraceError(Error.NoActiveSpanOnLeave);
+                }
+
                 return;
             }
 
