@@ -30,6 +30,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceEnter(
             string methodInfo,
+            Tuple<string, string>[] methodParameters,
             string[] paramNames,
             object[] paramValues)
         {
@@ -53,6 +54,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceLeave(
             string methodInfo,
+            Tuple<string, string>[] methodParameters,
             long startTicks,
             long endTicks,
             string[] paramNames,
