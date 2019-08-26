@@ -84,6 +84,7 @@ as follows.
           <!-- Trace all methods on public classes -->
           <!-- Avoid tracing the startup method - e.g. don't trace before you've configured the GlobalTracer.Instance
                so in this case, make sure Main and SetupTracer are marked with [NoTrace] -->
+          <!-- ^ not necessary anymore, now it will just Trace.Write that you tried to do a trace without a tracer registered -->
           <TraceOn class="public" method="all" />
         </Tracer>
       </Weavers>
