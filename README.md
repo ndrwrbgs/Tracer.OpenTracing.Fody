@@ -14,23 +14,35 @@ It can reduce your code as follows
  {
    public void Method1()
    {
--    using (GlobalTracer.Instance
+-    IScope scope = GlobalTracer.Instance
 -      .BuildSpan(nameof(Class) + "." + nameof(Method1))
--      .StartActive())
+-      .StartActive();
+-    try
 -    {
        // Do stuff
        this.MethodImpl();
+-    }
+-    finally
+-    {
+-      /* Some error logging on the Scope */
+-      scope.Dispose();
 -    }
    }
 
    public void Method2()
    {
--    using (GlobalTracer.Instance
--      .BuildSpan(nameof(Class) + "." + nameof(Method2))
--      .StartActive())
+-    IScope scope = GlobalTracer.Instance
+-      .BuildSpan(nameof(Class) + "." + nameof(Method1))
+-      .StartActive();
+-    try
 -    {
        // Do stuff
        this.MethodImpl();
+-    }
+-    finally
+-    {
+-      /* Some error logging on the Scope */
+-      scope.Dispose();
 -    }
    }
    
