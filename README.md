@@ -45,6 +45,7 @@ It can reduce your code as follows
 1. Make sure your startup logic is configuring `GlobalTracer.Instance` via [`GlobalTracer.Register`](https://github.com/opentracing/opentracing-csharp/blob/d00349731545c04c989ba138f12e402cbe902208/src/OpenTracing/Util/GlobalTracer.cs#L74). 
 If you don't have one ready presently, you can use [`EventHookTracer`](https://www.nuget.org/packages/OpenTracing.Contrib.EventHookTracer/)
 as follows.
+^ Old news, use https://github.com/opentracing-contrib/csharp-decorators now
 
       ### EventHookTracer example
       ```C#
