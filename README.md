@@ -32,7 +32,7 @@ It can reduce your code as follows
    public void Method2()
    {
 -    IScope scope = GlobalTracer.Instance
--      .BuildSpan(nameof(Class) + "." + nameof(Method1))
+-      .BuildSpan(nameof(Class) + "." + nameof(Method2))
 -      .StartActive();
 -    try
 -    {
