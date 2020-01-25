@@ -92,7 +92,8 @@ as follows.
       <Weavers>   
         <Tracer adapterAssembly="Tracer.OpenTracing" 
                 logManager="Tracer.OpenTracing.LogManagerAdapter" 
-                logger="Tracer.OpenTracing.LoggerAdapter" >
+                logger="Tracer.OpenTracing.LoggerAdapter" 
+                staticLogger="" >
           <!-- Trace all methods on public classes -->
           <!-- Avoid tracing the startup method - e.g. don't trace before you've configured the GlobalTracer.Instance
                so in this case, make sure Main and SetupTracer are marked with [NoTrace] -->

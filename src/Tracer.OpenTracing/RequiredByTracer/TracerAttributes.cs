@@ -12,6 +12,10 @@ namespace TracerAttributes
     {
         public TraceTarget Target { get; set; }
 
+        public bool IncludeArguments { get; set; }
+
+        public bool IncludeReturnValue { get; set; }
+
         public TraceOn()
         {
         }

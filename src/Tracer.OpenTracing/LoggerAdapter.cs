@@ -1,21 +1,27 @@
 ﻿namespace Tracer.OpenTracing
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
+
+    using global::OpenTracing;
     using global::OpenTracing.Contrib.SemanticConventions;
     using global::OpenTracing.Util;
     using JetBrains.Annotations;
+
+    using Tracer.OpenTracing.Util;
+
     using TracerAttributes;
 
     [PublicAPI]
-    [TraceOn(TraceTarget.Public)]
     public class LoggerAdapter
     {
         /// <summary>
         /// From https://github.com/csnemes/tracer/blob/master/Tracer.Fody/Weavers/MethodWeaverBase.cs
         /// </summary>
         private static readonly string ExceptionMarker = "$exception";
+        private static readonly string ReturnValueMarker = null;
 
         private readonly string name;
 
@@ -30,7 +36,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceEnter(
             string methodInfo,
-            Tuple<string, string>[] methodParameters,
+            Tuple<string, string>[] configParameters,
             string[] paramNames,
             object[] paramValues)
         {
@@ -46,15 +52,34 @@
                 return;
             }
 
-            GlobalTracer.Instance
-                .BuildSpan($"{this.name}{methodInfo}")
+            ISpanBuilder spanBuilder = GlobalTracer.Instance
+                .BuildSpan($"{this.name}{methodInfo}");
+
+            // Add arguments (if configured to)
+            {
+                if (ShouldIncludeArguments(configParameters))
+                {
+                    for (int paramIndex = 0; paramIndex < paramNames.Length; paramIndex++)
+                    {
+                        string paramName = paramNames[paramIndex];
+                        object paramValue = paramValues[paramIndex];
+                        // TODO: Support other forms of serialization
+                        string serializedParamValue = paramValue?.ToString();
+
+                        spanBuilder = spanBuilder
+                            .WithTag(paramName, serializedParamValue);
+                    }
+                }
+            }
+
+            spanBuilder
                 .StartActive();
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TraceLeave(
             string methodInfo,
-            Tuple<string, string>[] methodParameters,
+            Tuple<string, string>[] configParameters,
             long startTicks,
             long endTicks,
             string[] paramNames,
@@ -98,8 +123,56 @@
                         .LogError(exception);
                 }
             }
+            
+            // Add Return Value (if configured to)
+            {
+                if (ShouldIncludeReturnValue(configParameters))
+                {
+                    if (paramNames != null)
+                    {
+                        int i = 0;
+                        for (; i < paramNames.Length; i++)
+                        {
+                            if (string.Equals(ReturnValueMarker, paramNames[i]))
+                            {
+                                break;
+                            }
+                        }
+
+                        if (i < paramNames.Length)
+                        {
+                            // Found match
+                            var returnValue = paramValues[i];
+                            activeScope.Span
+                                .Log(
+                                    new KeyValuePair<string, object>[]
+                                    {
+                                        new KeyValuePair<string, object>("ReturnValue", returnValue)
+                                    });
+                        }
+                    }
+                }
+            }
 
             activeScope.Dispose();
+        }
+
+        private static bool ShouldIncludeArguments(Tuple<string, string>[] configParameters)
+        {
+            var includeArgumentsParameter = configParameters
+                ?.FirstOrDefault(tup => tup.Item1 == nameof(TraceOn.IncludeArguments))
+                ?.Item2;
+            var includeArguments = includeArgumentsParameter == null ? false : bool.Parse(includeArgumentsParameter);
+            return includeArguments;
+        }
+
+        private static bool ShouldIncludeReturnValue(Tuple<string, string>[] configParameters)
+        {
+            var includeReturnValueParameter = configParameters
+                ?.FirstOrDefault(tup => tup.Item1 == nameof(TraceOn.IncludeReturnValue))
+                ?.Item2;
+            var includeReturnValue = includeReturnValueParameter == null ? false : bool.Parse(includeReturnValueParameter);
+            return includeReturnValue;
         }
     }
 
