@@ -45,7 +45,8 @@
                 {
                     for (int paramIndex = 0; paramIndex < paramNames.Length; paramIndex++)
                     {
-                        string paramName = paramNames[paramIndex];
+                        // Prepending Arguments. because Jaeger alphabetizes the tags, so it was hard to discover them
+                        string paramName = "arguments." + paramNames[paramIndex];
                         object paramValue = paramValues[paramIndex];
                         // TODO: Support other forms of serialization
                         string serializedParamValue = paramValue?.ToString();
@@ -124,11 +125,13 @@
 
                             activeScope.AddEvent(
                                 new ActivityEvent(
-                                    "ReturnValue",
+                                    "Logging return value",
                                     tags: new ActivityTagsCollection(
                                         new[]
                                         {
-                                            new KeyValuePair<string, object>("ReturnValue", returnValue)
+                                            new KeyValuePair<string, object>("ReturnValue", returnValue 
+                                                                                            // We observed data omitted in Jaeger when null
+                                                                                            ?? "<null>")
                                         })));
                         }
                     }
